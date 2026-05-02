@@ -39,7 +39,7 @@ export default function Home() {
   }, [selectedMood]);
 
   const filteredMovies = movies.filter(
-    (movie) => Number(movie.imdbRating) >= rating
+    (movie) => Number(movie.imdbRating || 0) >= rating
   );
 
   return (
