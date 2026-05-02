@@ -4,16 +4,22 @@ export const fetchMovies = async (
 ) => {
   const apiKey = process.env.NEXT_PUBLIC_OMDB_API_KEY;
 
-  const res = await fetch(
-    `https://www.omdbapi.com/?apikey=${apiKey}&s=${query}&type=movie`
-  );
+  let allMovies: any[] = [];
 
-  const data = await res.json();
+  for (let page = 1; page <= 3; page++) {
+    const res = await fetch(
+      `https://www.omdbapi.com/?apikey=${apiKey}&s=${query}&type=movie&page=${page}`
+    );
 
-  if (!data.Search) return [];
+    const data = await res.json();
+
+    if (data.Search) {
+      allMovies = [...allMovies, ...data.Search];
+    }
+  }
 
   const detailedMovies = await Promise.all(
-    data.Search.slice(0, 12).map(async (movie: any) => {
+    allMovies.map(async (movie: any) => {
       const detailRes = await fetch(
         `https://www.omdbapi.com/?apikey=${apiKey}&i=${movie.imdbID}&plot=short`
       );
