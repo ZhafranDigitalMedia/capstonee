@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import MoodSelector from "@/components/MoodSelector";
 import SearchFilter from "@/components/SearchFilter";
-import MovieCard from "@/components/MovidCard";
+import MovieCard from "@/components/MovieCard";
 import { moods } from "@/data/moods";
 import { fetchMovies } from "@/lib/omdb";
 

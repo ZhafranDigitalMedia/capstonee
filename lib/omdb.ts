@@ -1,4 +1,7 @@
-export const fetchMovies = async (query: string, rating: number) => {
+export const fetchMovies = async (
+  query: string,
+  rating: number
+) => {
   const apiKey = process.env.NEXT_PUBLIC_OMDB_API_KEY;
 
   const res = await fetch(
@@ -14,13 +17,12 @@ export const fetchMovies = async (query: string, rating: number) => {
       const detailRes = await fetch(
         `https://www.omdbapi.com/?apikey=${apiKey}&i=${movie.imdbID}&plot=short`
       );
+
       return detailRes.json();
     })
   );
 
   return detailedMovies.filter(
-    (movie) =>
-      parseFloat(movie.imdbRating) >= rating &&
-      movie.Poster !== "N/A"
+    (movie) => movie.Poster !== "N/A"
   );
 };
