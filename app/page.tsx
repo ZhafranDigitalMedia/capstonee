@@ -39,8 +39,8 @@ export default function Home() {
   }, [selectedMood]);
 
   const filteredMovies = movies.filter(
-    (movie) => Number(movie.imdbRating || 0) >= rating
-  );
+  (movie) => Number(movie.imdbRating || 0) >= rating
+);
 
   return (
     <main className="min-h-screen pt-24 bg-gradient-to-b from-[#0b1026] to-[#6a11cb] text-white">
