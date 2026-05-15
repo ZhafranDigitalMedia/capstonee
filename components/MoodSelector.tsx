@@ -1,3 +1,5 @@
+"use client";
+
 interface MoodSelectorProps {
   moods: any[];
   selectedMood: any;
@@ -9,6 +11,17 @@ export default function MoodSelector({
   selectedMood,
   setSelectedMood,
 }: MoodSelectorProps) {
+
+  const handleMoodClick = (mood: any) => {
+    // Tracking berapa kali tiap mood dipilih
+    const stored = localStorage.getItem("moodStats");
+    const parsed = stored ? JSON.parse(stored) : {};
+    parsed[mood.nama] = (parsed[mood.nama] || 0) + 1;
+    localStorage.setItem("moodStats", JSON.stringify(parsed));
+
+    setSelectedMood(mood);
+  };
+
   return (
     <section className="max-w-7xl mx-auto px-6 mt-10">
       <h3 className="text-3xl font-semibold mb-8">
@@ -22,20 +35,11 @@ export default function MoodSelector({
           return (
             <div
               key={index}
-              onClick={() => setSelectedMood(mood)}
+              onClick={() => handleMoodClick(mood)}
               className={`
-                cursor-pointer
-                h-[180px]
-                rounded-3xl
-                border
-                flex
-                flex-col
-                items-center
-                justify-center
-                text-center
-                transition-all
-                duration-300
-                hover:scale-105
+                cursor-pointer h-[180px] rounded-3xl border
+                flex flex-col items-center justify-center text-center
+                transition-all duration-300 hover:scale-105
                 ${
                   selectedMood.nama === mood.nama
                     ? "border-pink-400 bg-white/10 shadow-2xl"
@@ -43,19 +47,11 @@ export default function MoodSelector({
                 }
               `}
             >
-              <div
-                className={`w-16 h-16 rounded-full flex items-center justify-center ${mood.color}`}
-              >
+              <div className={`w-16 h-16 rounded-full flex items-center justify-center ${mood.color}`}>
                 <Icon size={30} />
               </div>
-
-              <h4 className="text-xl mt-4 font-bold">
-                {mood.nama}
-              </h4>
-
-              <p className="text-sm text-gray-300 mt-1 px-3">
-                {mood.genres}
-              </p>
+              <h4 className="text-xl mt-4 font-bold">{mood.nama}</h4>
+              <p className="text-sm text-gray-300 mt-1 px-3">{mood.genres}</p>
             </div>
           );
         })}
